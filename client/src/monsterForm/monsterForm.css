@@ -1,0 +1,95 @@
+.monster-form-container__inner {
+  width: 500px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.monster-form {
+  background-color: #222;
+}
+
+.monster-form__input-name, .monster-form__textarea-def {
+  width: 100%;
+  margin: 15px 0 0 0;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  background: none;
+  color: #fff;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.monster-form__input-name {
+  font-size: 24px;
+  height: 53px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.monster-form__textarea-def {
+  font-size: 20px;
+  resize: none;
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+.monster-form__prop-holder {
+  width: 50%;
+  font-size: 20px;
+  display: inline-block;
+  color: #fff;
+}
+
+.monster-form__circle {
+  display: inline-block;
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  border: 2px solid #ef6b50;
+  background-color: hsla(0, 0%, 100%, .1);
+  margin-right: 2px;
+}
+
+.monster-form__circle-fill {
+  background-color: #ef6b50;
+}
+
+.monster-form__circle-error {
+  border-color: rgb(184, 120, 152);
+}
+
+.monster-form__props {
+  margin-top: 15px;
+}
+
+.monster-form__button {
+  cursor: pointer;
+  font-size: 24px;
+  color: #000;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 60px;
+  margin-bottom: 30px;
+}
+
+.monster-form__button:hover {
+  background-color: #ef6b50;
+}
+
+.monster-form__button-add {
+  width: 85%;
+}
+
+.monster-form__props-too-much {
+  position: absolute;
+  left: 50%;
+  bottom: 100px;
+  transform: translate(-50%, 0);
+  font-size: 24px;
+  color: #fff;
+}
