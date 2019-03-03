@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import MonsterForm from './monsterForm/monsterForm.js'
-import SnakeReactComponent from './snake/snakeReactComponent.js'
+import MonsterForm from './monsterForm/monsterForm.js';
+import SnakeReactComponent from './snake/snakeReactComponent.js';
 
 class App extends Component {
 
@@ -21,7 +21,7 @@ class App extends Component {
         </main>
       </div>
     );
-  }
-}
+  };
+};
 
 export default App;

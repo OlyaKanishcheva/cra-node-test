@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import Snake from './snake.js'
+import Snake from './snake.js';
 import './snake.css';
+import { foodGenerator, findFoodCollisions } from './foodGenerator';
 
 class SnakeReactComponent extends Component {
-	constructor(props) {
-    super(props)
-
-    this.startGame = this.startGame.bind(this)
-    this.stopGame = this.stopGame.bind(this)
-  }
+  constructor(props) {
+    super(props);
+    this.startGame = this.startGame.bind(this);
+    this.stopGame = this.stopGame.bind(this);
+  };
 
   componentDidMount() {
-    this.game = null
-  }
+    this.game = null;
+  };
 
   startGame() {
-    const canvas = this.refs.canvas
-    const ctx = canvas.getContext('2d')
-    const game = { ctx }
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext('2d');
+    const game = { ctx };
 
     game.snake = new Snake({
       x: 100,
@@ -25,31 +25,36 @@ class SnakeReactComponent extends Component {
       angle: 0,
       length: Snake.INITIAL_LENGTH,
       game: game,
-    })
+    });
 
-    game.foods = []
+    game.foods = [];
 
-    document.addEventListener('keydown', game.snake.directionControl.bind(game.snake))
+    document.addEventListener('keydown', game.snake.directionControl.bind(game.snake));
 
-    this.game = game
-    this.run(game)
-  }
+    this.game = game;
+    this.run(game);
+  };
 
   run(game) {
-    const {snake, ctx} = game
+    const { snake, ctx, foods } = game;
     const canvasSize = {
       mapW: 500,
       mapH: 500,
-    }
+    };
 
-    game.snakeInterval = setInterval(snake.running, 30, canvasSize, snake)
-  }
+    foodGenerator(foods, ctx);
+    game.snakeInterval = setInterval(snake.running, 30, canvasSize, snake);
+    game.foodInterval = setInterval(findFoodCollisions, 30, foods, ctx, snake);
+  };
 
   stopGame() {
-    const {snake} = this.game
-    document.removeEventListener('keydown', snake.directionControl.bind(snake))
-    this.game = null
-  }
+    const { game } = this;
+    const { snake } = game;
+
+    document.removeEventListener('keydown', snake.directionControl.bind(snake));
+
+    snake.finishGame();
+  };
 
   render() {
     return (
@@ -69,8 +74,8 @@ class SnakeReactComponent extends Component {
           height='500'>
         </canvas>
       </div>
-    )
-  }
-}
+    );
+  };
+};
 
-export default SnakeReactComponent
+export default SnakeReactComponent;
