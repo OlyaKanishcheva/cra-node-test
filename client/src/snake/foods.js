@@ -22,14 +22,9 @@ const findFoodCollisions = (foods, ctx, snake, onCollision) => {
         food.destroy(ctx);
         foods.splice(foods.indexOf(food), 1);
         snake.length++;
-        // changeScore(snake.length - Snake.INITIAL_LENGTH);
         onCollision(snake.length - Snake.INITIAL_LENGTH);
       };
   };
-};
-
-// const changeScore = (score) => {
-//   console.warn(score);
-// };
+};;
 
 export { foodGenerator, findFoodCollisions };
