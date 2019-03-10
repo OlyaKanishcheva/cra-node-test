@@ -109,22 +109,24 @@ class Snake {
   };
 
   finishGame() {
-    const { game } = this;
+    const { game, ctx } = this;
+
     if (game.finished) return;
     game.finished = true;
 
     clearInterval(game.snakeInterval);
     clearInterval(game.foodInterval);
 
-    // this.game = null;
-    alert('You lose :(');
+    alert('You lose 🙃');
+
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   };
 
 };
 
 Snake.HEAD_RADIUS = 5;
 Snake.SPEED = 2;
-Snake.INITIAL_LENGTH = 150;
-Snake.ROTATION_SPEED = 5;
+Snake.INITIAL_LENGTH = 10;
+Snake.ROTATION_SPEED = 10;
 
 export default Snake;

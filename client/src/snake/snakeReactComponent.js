@@ -1,23 +1,40 @@
 import React, { Component } from 'react';
 import Snake from './snake.js';
 import './snake.css';
-import { foodGenerator, findFoodCollisions } from './foodGenerator';
+import { foodGenerator, findFoodCollisions } from './foods';
 
 class SnakeReactComponent extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      score: props.score ? props.score : 0,
+    };
     this.startGame = this.startGame.bind(this);
     this.stopGame = this.stopGame.bind(this);
+    this.onCollision = this.onCollision.bind(this);
   };
 
   componentDidMount() {
     this.game = null;
   };
 
+  onCollision(score) {
+    const { state } = this;
+    this.setState({
+      ...state,
+      score: score,
+    });
+  };
+
   startGame() {
-    const canvas = this.refs.canvas;
+    const { onCollision, refs } = this;
+    const canvas = refs.canvas;
     const ctx = canvas.getContext('2d');
     const game = { ctx };
+    const canvasSize = {
+      mapW: 500,
+      mapH: 500,
+    };
 
     game.snake = new Snake({
       x: 100,
@@ -31,20 +48,11 @@ class SnakeReactComponent extends Component {
 
     document.addEventListener('keydown', game.snake.directionControl.bind(game.snake));
 
+    foodGenerator(game.foods, game.ctx);
+    game.snakeInterval = setInterval(game.snake.running, 30, canvasSize, game.snake);
+    game.foodInterval = setInterval(findFoodCollisions, 30, game.foods, game.ctx, game.snake, onCollision);
+
     this.game = game;
-    this.run(game);
-  };
-
-  run(game) {
-    const { snake, ctx, foods } = game;
-    const canvasSize = {
-      mapW: 500,
-      mapH: 500,
-    };
-
-    foodGenerator(foods, ctx);
-    game.snakeInterval = setInterval(snake.running, 30, canvasSize, snake);
-    game.foodInterval = setInterval(findFoodCollisions, 30, foods, ctx, snake);
   };
 
   stopGame() {
@@ -52,11 +60,13 @@ class SnakeReactComponent extends Component {
     const { snake } = game;
 
     document.removeEventListener('keydown', snake.directionControl.bind(snake));
-
     snake.finishGame();
+    
+    this.game = null;
   };
 
   render() {
+    const { state } = this;
     return (
       <div className='snake__wrapper'>
         <div className='snake__header'>
@@ -64,7 +74,7 @@ class SnakeReactComponent extends Component {
             <button className='snake__btn' onClick={this.startGame}>Start</button>
             <button className='snake__btn' onClick={this.stopGame}>Stop</button>
           </div>
-          <div className='snake__score'>Length: 0</div>
+          <div className='snake__score'>{`Length: ${state.score}`}</div>
         </div>
         <canvas 
           ref='canvas' 
